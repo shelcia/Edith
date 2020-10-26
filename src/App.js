@@ -1,18 +1,22 @@
 import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import HomePage from "./components/HomePage";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+
+import "./styles/style.css";
 
 const App = () => {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <BrowserRouter>
+        <Switch>
+          <Route path='/' exact component={HomePage} />
+          <Route path='/login' component={Login} />
+          <Route path='/signup' component={Signup} />
+        </Switch>
+      </BrowserRouter>
+    </React.Fragment>
   );
 };
 
