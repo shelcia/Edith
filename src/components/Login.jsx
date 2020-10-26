@@ -1,12 +1,38 @@
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
+import Loading from "./Loading";
 
 const Login = () => {
   const user = useRef(null);
   const password = useRef(null);
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
+    const PREFIX = "Edith-";
+
+    const URL = process.env.REACT_APP_HEROKU_LINK;
+
+    const response = {
+      email: user.current.value,
+      password: password.current.value,
+    };
+
+    try {
+      const result = await axios.post(`${URL}api/auth/login`, response);
+      setIsLoading(false);
+      console.log(result);
+      localStorage.setItem(`${PREFIX}token`, result.data.token);
+      localStorage.setItem(`${PREFIX}id`, result.data._id);
+      history.push(`/user/${result.data._id}`);
+    } catch (e) {
+      setIsLoading(false);
+      //   ErrorNotify();
+      console.log(`Axios request failed: ${e}`);
+    }
   };
 
   return (
@@ -22,9 +48,7 @@ const Login = () => {
               type='email'
               ref={user}
               className='form-control'
-              id='uname'
               placeholder='Enter email'
-              name='uname'
               required
             />
             <div className='invalid-feedback'>Please enter valid email.</div>
@@ -35,17 +59,19 @@ const Login = () => {
               type='password'
               ref={password}
               className='form-control'
-              id='pwd'
               placeholder='Enter password'
-              name='pswd'
               required
             />
             <div className='invalid-feedback'>Please fill out this field.</div>
           </div>
           <div className='text-center'>
-            <button type='submit' className='btn btn-primary'>
-              Submit
-            </button>
+            {isLoading ? (
+              <Loading message='Please wait while we verify !' />
+            ) : (
+              <button type='submit' className='btn btn-primary'>
+                Submit
+              </button>
+            )}
           </div>
         </form>
         <div className='text-center mt-5'>
