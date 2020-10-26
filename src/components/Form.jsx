@@ -31,10 +31,16 @@ const Form = () => {
     history.push("/");
   };
 
+  const checkAnswers = (event, id) => {
+    event.preventDefault();
+    const result = hints.filter((hint) => hint._id === id);
+    console.log(result);
+  };
+
   return (
     <React.Fragment>
       <div
-        className='container mt-5 shadow py-3 rounded'
+        className='container my-5 shadow py-3 rounded'
         style={{ maxWidth: "800px" }}>
         <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
           Edith Questions
@@ -47,12 +53,16 @@ const Form = () => {
                 <div className='col'>
                   <input
                     type='text'
+                    id={`${hint._id}-input`}
                     className='form-control'
                     placeholder='Enter flag'
                   />
                 </div>
                 <div className='col text-right'>
-                  <button className='btn btn-primary' type='submit'>
+                  <button
+                    className='btn btn-primary'
+                    type='submit'
+                    onClick={(e) => checkAnswers(e, hint._id)}>
                     Submit
                   </button>
                   <button

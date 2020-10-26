@@ -1,7 +1,7 @@
 import React from "react";
 
 const HintModal = ({ hint, hintId }) => {
-  console.log(`modal${hintId}`);
+  //   console.log(`modal${hintId}`);
   return (
     <React.Fragment>
       <div className='modal fade' id={`modal${hintId}`}>
