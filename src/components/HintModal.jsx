@@ -5,7 +5,7 @@ const HintModal = ({ hint, hintId }) => {
   return (
     <React.Fragment>
       <div className='modal fade' id={`modal${hintId}`}>
-        <div className='modal-dialog'>
+        <div className='modal-dialog modal-dialog-centered'>
           <div className='modal-content'>
             <div className='modal-header'>
               <h4 className='modal-title'>Hint !!</h4>

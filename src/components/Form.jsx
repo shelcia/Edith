@@ -2,12 +2,32 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import HintModal from "./HintModal";
+import useDynamicRefs from "use-dynamic-refs";
 
 const Form = () => {
   const [hints, setHints] = useState([]);
   const history = useHistory();
+  const [getRef, setRef] = useDynamicRefs();
+  const [point, setPoint] = useState();
 
   const URL = process.env.REACT_APP_HEROKU_LINK;
+  const token = localStorage.getItem("Edith-token");
+  const userId = localStorage.getItem("Edith-id");
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const headers = {
+    "auth-token": token,
+  };
+
+  const convertDate = (date) => {
+    const dates = new Date(date);
+    const formattedDate = Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+    }).format(dates);
+    return formattedDate;
+  };
 
   useEffect(() => {
     axios
@@ -19,6 +39,20 @@ const Form = () => {
       .catch((error) => console.log(error));
   }, [URL]);
 
+  useEffect(() => {
+    axios({
+      url: `${URL}api/auth/getpoints/${userId}`,
+      method: "get",
+      headers: headers,
+    })
+      .then((response) => {
+        // console.log(response.data.point);
+        setPoint(response.data.point);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [URL, headers, userId]);
   useEffect(() => {
     if (!localStorage.getItem("Edith-token")) history.push("/");
   });
@@ -33,8 +67,33 @@ const Form = () => {
 
   const checkAnswers = (event, id) => {
     event.preventDefault();
+    let currentPoint;
     const result = hints.filter((hint) => hint._id === id);
-    console.log(result);
+    const inputValue = getRef(`${id}-input`);
+    console.log(inputValue);
+    if (!typeof inputValue === null) {
+      if (inputValue.current.value === result[0].answer)
+        currentPoint = point + 20;
+      else currentPoint = point;
+    }
+
+    console.log(userId);
+    const response = { point: currentPoint };
+
+    axios({
+      url: `${URL}api/auth/editpoints/${userId}`,
+      method: "put",
+      data: response,
+      headers: headers,
+    })
+      .then((response) => {
+        console.log(response);
+        //   setIsLoading(false);
+      })
+      .catch((err) => {
+        //   setIsLoading(false);
+        console.log(err);
+      });
   };
 
   return (
@@ -52,6 +111,7 @@ const Form = () => {
               <div className='row'>
                 <div className='col'>
                   <input
+                    ref={setRef(`${hint._id}-input`)}
                     type='text'
                     id={`${hint._id}-input`}
                     className='form-control'
