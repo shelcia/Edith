@@ -67,33 +67,36 @@ const Form = () => {
 
   const checkAnswers = (event, id) => {
     event.preventDefault();
-    let currentPoint;
-    const result = hints.filter((hint) => hint._id === id);
-    const inputValue = getRef(`${id}-input`);
+    console.log(`${id}-input`);
+    const ids = `${id}-input`;
+    // let currentPoint;
+    // const result = hints.filter((hint) => hint._id === id);
+    const inputValue = getRef(ids);
     console.log(inputValue);
-    if (!typeof inputValue === null) {
-      if (inputValue.current.value === result[0].answer)
-        currentPoint = point + 20;
-      else currentPoint = point;
-    }
 
-    console.log(userId);
-    const response = { point: currentPoint };
+    // if (!typeof inputValue === null) {
+    //   if (inputValue.current.value === result[0].answer)
+    //     currentPoint = point + 20;
+    //   else currentPoint = point;
+    // }
 
-    axios({
-      url: `${URL}api/auth/editpoints/${userId}`,
-      method: "put",
-      data: response,
-      headers: headers,
-    })
-      .then((response) => {
-        console.log(response);
-        //   setIsLoading(false);
-      })
-      .catch((err) => {
-        //   setIsLoading(false);
-        console.log(err);
-      });
+    // console.log(userId);
+    // const response = { point: currentPoint };
+
+    // axios({
+    //   url: `${URL}api/auth/editpoints/${userId}`,
+    //   method: "put",
+    //   data: response,
+    //   headers: headers,
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     //   setIsLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     //   setIsLoading(false);
+    //     console.log(err);
+    //   });
   };
 
   return (
