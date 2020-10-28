@@ -2,12 +2,18 @@ import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const user = useRef(null);
   const password = useRef(null);
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
+
+  const errorNotify = (message) => {
+    toast.error(message);
+  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -30,13 +36,14 @@ const Login = () => {
       history.push(`/user/${result.data._id}`);
     } catch (e) {
       setIsLoading(false);
-      //   ErrorNotify();
-      console.log(`Axios request failed: ${e}`);
+      errorNotify("Please Check your credentials");
+      // console.log(`Axios request failed: ${e}`);
     }
   };
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div
         className='container mt-5 shadow py-3 rounded'
         style={{ maxWidth: "500px" }}>
@@ -69,7 +76,7 @@ const Login = () => {
               <Loading message='Please wait while we verify !' />
             ) : (
               <button type='submit' className='btn btn-primary'>
-                Submit
+                Login
               </button>
             )}
           </div>

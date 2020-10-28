@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import HintModal from "./HintModal";
-import useDynamicRefs from "use-dynamic-refs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Form = () => {
   const [hints, setHints] = useState([]);
   const history = useHistory();
-  const [getRef, setRef] = useDynamicRefs();
-  const [point, setPoint] = useState();
+  const [submission, setSubmission] = useState([]);
+  const [isHintOpen, setIsHintOpen] = useState([]);
 
   const URL = process.env.REACT_APP_HEROKU_LINK;
   const token = localStorage.getItem("Edith-token");
@@ -19,15 +20,19 @@ const Form = () => {
     "auth-token": token,
   };
 
-  const convertDate = (date) => {
-    const dates = new Date(date);
-    const formattedDate = Intl.DateTimeFormat("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "2-digit",
-    }).format(dates);
-    return formattedDate;
+  const successNotify = (message) => {
+    toast.success(message);
   };
+
+  // const convertDate = (date) => {
+  //   const dates = new Date(date);
+  //   const formattedDate = Intl.DateTimeFormat("en-US", {
+  //     year: "numeric",
+  //     month: "short",
+  //     day: "2-digit",
+  //   }).format(dates);
+  //   return formattedDate;
+  // };
 
   useEffect(() => {
     axios
@@ -40,20 +45,6 @@ const Form = () => {
   }, [URL]);
 
   useEffect(() => {
-    axios({
-      url: `${URL}api/auth/getpoints/${userId}`,
-      method: "get",
-      headers: headers,
-    })
-      .then((response) => {
-        // console.log(response.data.point);
-        setPoint(response.data.point);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [URL, headers, userId]);
-  useEffect(() => {
     if (!localStorage.getItem("Edith-token")) history.push("/");
   });
 
@@ -62,45 +53,75 @@ const Form = () => {
     const PREFIX = "Edith-";
     localStorage.removeItem(`${PREFIX}token`);
     localStorage.removeItem(`${PREFIX}id`);
+    localStorage.removeItem(`${PREFIX}point`);
     history.push("/");
   };
 
-  const checkAnswers = (event, id) => {
+  const checkAnswers = (event, id, title) => {
     event.preventDefault();
-    console.log(`${id}-input`);
-    const ids = `${id}-input`;
-    // let currentPoint;
+    const ids = document.getElementById(`${id}-input`);
+    console.log(ids.value);
     // const result = hints.filter((hint) => hint._id === id);
-    const inputValue = getRef(ids);
-    console.log(inputValue);
 
-    // if (!typeof inputValue === null) {
-    //   if (inputValue.current.value === result[0].answer)
-    //     currentPoint = point + 20;
-    //   else currentPoint = point;
-    // }
+    axios({
+      url: `${URL}api/auth/user/${userId}`,
+      method: "get",
+      headers: headers,
+    })
+      .then((response) => {
+        setSubmission(response.data.submission);
+        setIsHintOpen(response.data.isHintOpen);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    // console.log(userId);
-    // const response = { point: currentPoint };
+    const response = {
+      submission: [
+        ...submission,
+        { id: id, hintTitle: title, answer: ids.value, timeStamp: Date.now() },
+      ],
+    };
 
-    // axios({
-    //   url: `${URL}api/auth/editpoints/${userId}`,
-    //   method: "put",
-    //   data: response,
-    //   headers: headers,
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     //   setIsLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     //   setIsLoading(false);
-    //     console.log(err);
-    //   });
+    axios({
+      url: `${URL}api/auth/user/${userId}`,
+      method: "put",
+      data: response,
+      headers: headers,
+    })
+      .then((response) => {
+        console.log(response);
+        successNotify("Submitted Successfully !!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const openHint = (event, id) => {
+    event.preventDefault();
+
+    const response = {
+      isHintOpen: [...isHintOpen, { id: id, timeStamp: Date.now() }],
+    };
+
+    axios({
+      url: `${URL}api/auth/user/${userId}`,
+      method: "put",
+      data: response,
+      headers: headers,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <div
         className='container my-5 shadow py-3 rounded'
         style={{ maxWidth: "800px" }}>
@@ -112,36 +133,38 @@ const Form = () => {
           <React.Fragment key={hint._id}>
             <form className='mb-2'>
               <div className='row'>
-                <div className='col'>
+                <div className='col-sm-8'>
                   <input
-                    ref={setRef(`${hint._id}-input`)}
                     type='text'
                     id={`${hint._id}-input`}
                     className='form-control'
                     placeholder='Enter flag'
+                    required
                   />
                 </div>
-                <div className='col text-right'>
+                <div className='col-sm-4 text-right'>
                   <button
                     className='btn btn-primary'
                     type='submit'
-                    onClick={(e) => checkAnswers(e, hint._id)}>
+                    onClick={(e) => checkAnswers(e, hint._id, hint.hintTitle)}>
                     Submit
                   </button>
                   <button
                     className='btn btn-outline-primary ml-2'
                     type='button'
                     data-toggle='modal'
-                    data-target={`#modal${hint._id}`}>
+                    data-target={`#modal${hint._id}`}
+                    onClick={(e) => openHint(e, hint._id)}>
                     Show Hint
                   </button>
                 </div>
               </div>
-              <p className='font-weight-light mt-1 text-primary'>
-                Last Submitted: {hint.lastSubmitted}
-              </p>
             </form>
-            <HintModal hint={hint.hint} hintId={hint._id} />
+            <HintModal
+              hintTitle={hint.hintTitle}
+              hint={hint.hint}
+              hintId={hint._id}
+            />
           </React.Fragment>
         ))}
         <hr />
@@ -162,3 +185,13 @@ const Form = () => {
 };
 
 export default Form;
+
+// <button
+// className='btn btn-primary'
+// type='submit'
+// onClick={(e) => checkAnswers(e, hint._id)}>
+// Submit
+// </button>
+// <p className='font-weight-light mt-1 text-primary'>
+// Last Submitted: {hint.lastSubmitted}
+// </p>
