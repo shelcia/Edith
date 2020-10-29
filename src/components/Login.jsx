@@ -47,7 +47,10 @@ const Login = () => {
       <div
         className='container mt-5 shadow py-3 rounded'
         style={{ maxWidth: "500px" }}>
-        <h3 className='text-center'>Login</h3>
+        <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
+          Login
+        </h3>
+        <hr />
         <form className='was-validated' onSubmit={onSubmit}>
           <div className='form-group'>
             <label htmlFor='uname'>Email:</label>
