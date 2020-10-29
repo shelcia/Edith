@@ -35,6 +35,7 @@ const Login = () => {
 
       if (result.data.isParticipated) {
         history.push("/noentrybro");
+        return;
       }
       localStorage.setItem(`${PREFIX}token`, result.data.token);
       localStorage.setItem(`${PREFIX}id`, result.data._id);

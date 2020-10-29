@@ -4,11 +4,13 @@ import { useHistory } from "react-router-dom";
 import HintModal from "./HintModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loading from "./Loading";
 
 const Form = () => {
   const [hints, setHints] = useState([]);
   const history = useHistory();
   const [user, setUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const URL = process.env.REACT_APP_HEROKU_LINK;
   const token = localStorage.getItem("Edith-token");
@@ -45,10 +47,12 @@ const Form = () => {
   //GET HINTS
   useEffect(() => {
     const ac = new AbortController();
+    setIsLoading(true);
     axios
       .get(`${URL}api/hint/hints`)
       .then((response) => {
         setHints(response.data);
+        setIsLoading(false);
       })
       .catch((error) => console.log(error));
     return () => ac.abort(); // Abort both fetches on unmount
@@ -179,44 +183,51 @@ const Form = () => {
           Edith Questions
         </h3>
         <hr />
-        {hints.map((hint) => (
-          <React.Fragment key={hint._id}>
-            <form className='mb-3'>
-              <div className='row'>
-                <div className='col-sm-8'>
-                  <input
-                    type='text'
-                    id={`${hint._id}-input`}
-                    className='form-control'
-                    placeholder='Enter flag'
-                    required
-                  />
+
+        {isLoading ? (
+          <Loading message='Loading hints and flags' />
+        ) : (
+          hints.map((hint) => (
+            <React.Fragment key={hint._id}>
+              <form className='mb-3'>
+                <div className='row'>
+                  <div className='col-sm-8'>
+                    <input
+                      type='text'
+                      id={`${hint._id}-input`}
+                      className='form-control'
+                      placeholder='Enter flag'
+                      required
+                    />
+                  </div>
+                  <div className='col-sm-4 text-right'>
+                    <button
+                      className='btn btn-primary'
+                      type='submit'
+                      onClick={(e) =>
+                        checkAnswers(e, hint._id, hint.hintTitle)
+                      }>
+                      Submit
+                    </button>
+                    <button
+                      className='btn btn-outline-primary ml-2'
+                      type='button'
+                      data-toggle='modal'
+                      data-target={`#modal${hint._id}`}
+                      onClick={(e) => openHint(e, hint._id, hint.hintTitle)}>
+                      Show Hint
+                    </button>
+                  </div>
                 </div>
-                <div className='col-sm-4 text-right'>
-                  <button
-                    className='btn btn-primary'
-                    type='submit'
-                    onClick={(e) => checkAnswers(e, hint._id, hint.hintTitle)}>
-                    Submit
-                  </button>
-                  <button
-                    className='btn btn-outline-primary ml-2'
-                    type='button'
-                    data-toggle='modal'
-                    data-target={`#modal${hint._id}`}
-                    onClick={(e) => openHint(e, hint._id, hint.hintTitle)}>
-                    Show Hint
-                  </button>
-                </div>
-              </div>
-            </form>
-            <HintModal
-              hintTitle={hint.hintTitle}
-              hint={hint.hint}
-              hintId={hint._id}
-            />
-          </React.Fragment>
-        ))}
+              </form>
+              <HintModal
+                hintTitle={hint.hintTitle}
+                hint={hint.hint}
+                hintId={hint._id}
+              />
+            </React.Fragment>
+          ))
+        )}
         <hr />
         <div className='text-center'>
           <button

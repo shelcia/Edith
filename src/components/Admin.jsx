@@ -54,6 +54,15 @@ const AdminDashboard = () => {
                   <p>Email: {user.email}</p>
                 </div>
                 <div className='card-body mb-4'>
+                  <p>Points: {user.point}</p>
+                </div>
+                <div className='card-body mb-4'>
+                  <p>
+                    Attendance:
+                    {user.isParticipated ? "Attended" : "Not Attended"}
+                  </p>
+                </div>
+                <div className='card-body mb-4'>
                   <p className='text-primary'>All Submissions</p>
                 </div>
                 {user.submission.map((sub) => (
