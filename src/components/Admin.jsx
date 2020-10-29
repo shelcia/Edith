@@ -13,7 +13,7 @@ const AdminDashboard = () => {
     axios
       .get(`${URL}api/auth/users`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setIsLoading(false);
         setUsers(response.data);
       })

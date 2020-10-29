@@ -31,7 +31,7 @@ const Form = () => {
     axios
       .get(`${URL}api/hint/hints`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setHints(response.data);
       })
       .catch((error) => console.log(error));
@@ -41,19 +41,10 @@ const Form = () => {
     if (!localStorage.getItem("Edith-token")) history.push("/");
   });
 
-  const logout = (e) => {
-    e.preventDefault();
-    const PREFIX = "Edith-";
-    localStorage.removeItem(`${PREFIX}token`);
-    localStorage.removeItem(`${PREFIX}id`);
-    localStorage.removeItem(`${PREFIX}point`);
-    history.push("/");
-  };
-
   const checkAnswers = (event, id, title) => {
     event.preventDefault();
     const ids = document.getElementById(`${id}-input`);
-    console.log(ids.value);
+    // console.log(ids.value);
 
     if (ids.value === "") {
       failNotify("We don't want empty input fields");
@@ -71,7 +62,7 @@ const Form = () => {
     })
       .then((response) => {
         setSubmission(response.data.submission);
-        setIsHintOpen(response.data.isHintOpen);
+        // setIsHintOpen(response.data.isHintOpen);
       })
       .catch((err) => {
         console.log(err);
@@ -97,7 +88,7 @@ const Form = () => {
       headers: headers,
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         successNotify("Submitted Successfully !!");
       })
       .catch((err) => {
@@ -107,7 +98,19 @@ const Form = () => {
 
   const openHint = (event, id, title) => {
     event.preventDefault();
-
+    axios({
+      url: `${URL}api/auth/user/${userId}`,
+      method: "get",
+      headers: headers,
+    })
+      .then((response) => {
+        setIsHintOpen(response.data.isHintOpen);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // console.log("Hint Opened");
+    // console.log("Hints", isHintOpen);
     const response = {
       isHintOpen: [
         ...isHintOpen,
@@ -122,7 +125,7 @@ const Form = () => {
       headers: headers,
     })
       .then((response) => {
-        console.log(response);
+        // console.log(response)
       })
       .catch((err) => {
         console.log(err);
@@ -181,12 +184,6 @@ const Form = () => {
         <div className='text-center'>
           <button className='btn btn-primary' type='button'>
             Finish
-          </button>
-          <button
-            className='btn btn-danger ml-2'
-            type='button'
-            onClick={(e) => logout(e)}>
-            Logout
           </button>
         </div>
       </div>

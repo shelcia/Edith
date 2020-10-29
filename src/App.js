@@ -6,6 +6,7 @@ import Signup from "./components/Signup";
 import Form from "./components/Form";
 import AdminDashboard from "./components/Admin";
 import Error404 from "./components/Error404";
+import FinalPage from "./components/FinalPage";
 
 import "./styles/style.css";
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/signup' component={Signup} />
           <Route path='/user/:id' component={Form} />
           <Route path='/admin/shelcia' component={AdminDashboard} />
+          <Route path='/finalpage' component={FinalPage} />
           <Route component={Error404} />
         </Switch>
       </BrowserRouter>
