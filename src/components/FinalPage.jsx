@@ -13,6 +13,7 @@ const FinalPage = () => {
     localStorage.removeItem(`${PREFIX}token`);
     localStorage.removeItem(`${PREFIX}id`);
     localStorage.removeItem(`${PREFIX}point`);
+    localStorage.removeItem(`${PREFIX}hintsOpened`);
     history.push("/");
   };
 

@@ -37,7 +37,7 @@ const AdminDashboard = () => {
     <React.Fragment>
       <div className='container my-5 shadow p-4 rounded'>
         {isLoading ? (
-          <Loading />
+          <Loading message='Loading Participant Details' />
         ) : (
           <div className='container' id='accordion'>
             {users.map((user) => (
@@ -113,46 +113,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
-// <div id="accordion">
-
-//   <div class="card">
-//     <div class="card-header">
-//       <a class="card-link" data-toggle="collapse" href="#collapseOne">
-//         Collapsible Group Item #1
-//       </a>
-//     </div>
-//     <div id="collapseOne" class="collapse show" data-parent="#accordion">
-//       <div class="card-body">
-//         Lorem ipsum..
-//       </div>
-//     </div>
-//   </div>
-
-//   <div class="card">
-//     <div class="card-header">
-//       <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
-//         Collapsible Group Item #2
-//       </a>
-//     </div>
-//     <div id="collapseTwo" class="collapse" data-parent="#accordion">
-//       <div class="card-body">
-//         Lorem ipsum..
-//       </div>
-//     </div>
-//   </div>
-
-//   <div class="card">
-//     <div class="card-header">
-//       <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
-//         Collapsible Group Item #3
-//       </a>
-//     </div>
-//     <div id="collapseThree" class="collapse" data-parent="#accordion">
-//       <div class="card-body">
-//         Lorem ipsum..
-//       </div>
-//     </div>
-//   </div>
-
-// </div>

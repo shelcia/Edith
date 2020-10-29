@@ -12,9 +12,9 @@ const Error = () => {
         </h3>
         <hr />
 
-        <div className='d-flex align-items-center justify-content-center'>
+        <div className='d-flex align-items-center justify-content-center flex-column'>
           <p>Error 404 !! page not found...</p>
-          <Link to='/'>Go to home</Link>
+          <Link to='/'>Go home</Link>
         </div>
       </div>
     </React.Fragment>

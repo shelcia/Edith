@@ -27,13 +27,15 @@ const Login = () => {
       password: password.current.value,
     };
 
+    const localArray = JSON.stringify(["hintsOpened"]);
+
     try {
       const result = await axios.post(`${URL}api/auth/login`, response);
       setIsLoading(false);
       console.log(result);
       localStorage.setItem(`${PREFIX}token`, result.data.token);
       localStorage.setItem(`${PREFIX}id`, result.data._id);
-      localStorage.setItem(`${PREFIX}hintsOpened`, []);
+      localStorage.setItem(`${PREFIX}hintsOpened`, localArray);
 
       history.push(`/user/${result.data._id}`);
     } catch (e) {

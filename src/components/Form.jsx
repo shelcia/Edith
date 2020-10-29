@@ -101,12 +101,21 @@ const Form = () => {
   //EXECUTES WHEN HINT IS OPENED BY USER
   const openHint = (event, id, title) => {
     event.preventDefault();
-    let hintsOpened = localStorage.getItem("Edith-hintsOpened");
+    let hintsOpened = JSON.parse(localStorage.getItem("Edith-hintsOpened"));
 
+    console.log(hintsOpened);
     if (!hintsOpened.includes(id)) {
+      // console.log("he");
       hintsOpened = [...hintsOpened, id];
-      localStorage.setItem("Edith-hintsOpened", hintsOpened);
+      console.log(hintsOpened);
+      localStorage.setItem(`Edith-hintsOpened`, JSON.stringify(hintsOpened));
     }
+
+    // if (!hintsOpened.includes(id)) {
+    //   hintsOpened = hintsOpened.push(id);
+    //   // console.log(hintsOpened.length);
+    //   localStorage.setItem("Edith-hintsOpened", hintsOpened);
+    // }
 
     console.log(hintsOpened);
 
@@ -157,7 +166,7 @@ const Form = () => {
     });
     let hintsOpened = localStorage.getItem("Edith-hintsOpened");
 
-    point = point - hintsOpened.length * 5;
+    point = point - (hintsOpened.length - 1) * 5;
 
     console.log("point", point);
     const response = {
