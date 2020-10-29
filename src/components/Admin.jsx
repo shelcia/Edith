@@ -15,6 +15,20 @@ const AdminDashboard = () => {
       })
       .catch((error) => console.log(error));
   }, [URL]);
+
+  const convertDate = (date) => {
+    const dates = new Date(date);
+    const formattedDate = Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "2-digit",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    }).format(dates);
+    return formattedDate;
+  };
+
   return (
     <React.Fragment>
       <div className='container my-5 shadow p-4 rounded'>
@@ -39,7 +53,7 @@ const AdminDashboard = () => {
                 <div className='mb-4'>
                   <table
                     className='table table-hover w-75 mx-auto shadow'
-                    key={sub.hintTitle}>
+                    key={sub.timeStamp}>
                     <tbody>
                       <tr>
                         <th>Hint Title: </th>
@@ -55,7 +69,32 @@ const AdminDashboard = () => {
                       </tr>
                       <tr>
                         <th>Time Stamp: </th>
-                        <td>{sub.timeStamp}</td>
+                        <td>
+                          {sub.timeStamp ? convertDate(sub.timeStamp) : ""}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              ))}
+              <div className='card-body mb-4'>
+                <p className='text-primary'>All Opened Hints</p>
+              </div>
+              {user.isHintOpen.map((hint) => (
+                <div className='mb-4'>
+                  <table
+                    className='table table-hover w-75 mx-auto shadow'
+                    key={hint.timeStamp}>
+                    <tbody>
+                      <tr>
+                        <th>Hint ID: </th>
+                        <td>{hint.id}</td>
+                      </tr>
+                      <tr>
+                        <th>Time Stamp: </th>
+                        <td>
+                          {hint.timeStamp ? convertDate(hint.timeStamp) : " "}
+                        </td>
                       </tr>
                     </tbody>
                   </table>
