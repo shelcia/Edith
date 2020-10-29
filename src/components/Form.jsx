@@ -44,21 +44,23 @@ const Form = () => {
 
   //GET HINTS
   useEffect(() => {
+    const ac = new AbortController();
     axios
       .get(`${URL}api/hint/hints`)
       .then((response) => {
         setHints(response.data);
       })
       .catch((error) => console.log(error));
+    return () => ac.abort(); // Abort both fetches on unmount
   }, [URL]);
 
   useEffect(() => {
     if (!localStorage.getItem("Edith-token")) history.push("/");
-  });
+  }, [history]);
 
   //CHECK ANSWER ONCE USER CLICK SUBMIT
   const checkAnswers = (event, id, title) => {
-    console.log(user);
+    // console.log(user);
     event.preventDefault();
     const ids = document.getElementById(`${id}-input`);
 

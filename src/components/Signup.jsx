@@ -30,6 +30,7 @@ const Signup = () => {
       email: user.current.value,
       password: password.current.value,
       point: 0,
+      isParticipated: false,
     };
 
     try {

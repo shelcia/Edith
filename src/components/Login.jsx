@@ -32,16 +32,34 @@ const Login = () => {
     try {
       const result = await axios.post(`${URL}api/auth/login`, response);
       setIsLoading(false);
-      console.log(result);
+      if (result.data.isParticipated) {
+        history.push("/noentrybro");
+      }
+      // console.log(result);
       localStorage.setItem(`${PREFIX}token`, result.data.token);
       localStorage.setItem(`${PREFIX}id`, result.data._id);
       localStorage.setItem(`${PREFIX}hintsOpened`, localArray);
+
+      const isLoggedIn = { isParticipated: true };
+
+      axios({
+        url: `${URL}api/auth/user/${result.data._id}`,
+        method: "put",
+        data: isLoggedIn,
+        headers: result.data.token,
+      })
+        .then((response) => {
+          console.log("entry registered succesfully");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
       history.push(`/user/${result.data._id}`);
     } catch (e) {
       setIsLoading(false);
       errorNotify("Please Check your credentials");
-      // console.log(`Axios request failed: ${e}`);
+      console.log(`Axios request failed: ${e}`);
     }
   };
 
