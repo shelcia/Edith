@@ -33,6 +33,8 @@ const Login = () => {
       console.log(result);
       localStorage.setItem(`${PREFIX}token`, result.data.token);
       localStorage.setItem(`${PREFIX}id`, result.data._id);
+      localStorage.setItem(`${PREFIX}hintsOpened`, []);
+
       history.push(`/user/${result.data._id}`);
     } catch (e) {
       setIsLoading(false);

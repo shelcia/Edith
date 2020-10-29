@@ -27,6 +27,7 @@ const Form = () => {
     toast.error(message);
   };
 
+  //GET HINTS
   useEffect(() => {
     axios
       .get(`${URL}api/hint/hints`)
@@ -41,6 +42,7 @@ const Form = () => {
     if (!localStorage.getItem("Edith-token")) history.push("/");
   });
 
+  //CHECK ANSWER ONCE USER CLICK SUBMIT
   const checkAnswers = (event, id, title) => {
     event.preventDefault();
     const ids = document.getElementById(`${id}-input`);
@@ -96,8 +98,18 @@ const Form = () => {
       });
   };
 
+  //EXECUTES WHEN HINT IS OPENED BY USER
   const openHint = (event, id, title) => {
     event.preventDefault();
+    let hintsOpened = localStorage.getItem("Edith-hintsOpened");
+
+    if (!hintsOpened.includes(id)) {
+      hintsOpened = [...hintsOpened, id];
+      localStorage.setItem("Edith-hintsOpened", hintsOpened);
+    }
+
+    console.log(hintsOpened);
+
     axios({
       url: `${URL}api/auth/user/${userId}`,
       method: "get",
@@ -130,6 +142,40 @@ const Form = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const calculateResults = (event) => {
+    event.preventDefault();
+    let point = 0;
+    // console.log(hints);
+
+    // eslint-disable-next-line array-callback-return
+    hints.map((hint) => {
+      if (hint.answer === document.getElementById(`${hint._id}-input`).value) {
+        point = point + 20;
+      }
+    });
+    let hintsOpened = localStorage.getItem("Edith-hintsOpened");
+
+    point = point - hintsOpened.length * 5;
+
+    console.log("point", point);
+    const response = {
+      point: point,
+    };
+    axios({
+      url: `${URL}api/auth/user/${userId}`,
+      method: "put",
+      data: response,
+      headers: headers,
+    })
+      .then((response) => {
+        // console.log(response)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    history.push("/finalpage");
   };
 
   return (
@@ -182,7 +228,10 @@ const Form = () => {
         ))}
         <hr />
         <div className='text-center'>
-          <button className='btn btn-primary' type='button'>
+          <button
+            className='btn btn-primary'
+            type='button'
+            onClick={(e) => calculateResults(e)}>
             Finish
           </button>
         </div>
