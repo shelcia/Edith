@@ -58,7 +58,7 @@ const Login = () => {
       history.push(`/user/${result.data._id}`);
     } catch (e) {
       setIsLoading(false);
-      errorNotify("Please Check your credentials");
+      errorNotify("Please Check your credentials🧟‍♀️");
       console.log(`Axios request failed: ${e}`);
     }
   };

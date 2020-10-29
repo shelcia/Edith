@@ -37,11 +37,11 @@ const Signup = () => {
       const result = await axios.post(`${URL}api/auth/register`, response);
       setIsLoading(false);
       console.log(result);
-      successNotify("Signup Successful ! Please Login to continue..");
+      successNotify("Signup Successfull ! Please Login to continue..👩🏽‍💻 ");
     } catch (e) {
       setIsLoading(false);
       // console.log(`Axios request failed: ${e}`);
-      errorNotify("User already Exists");
+      errorNotify("Either User already exists or check your connection");
     }
   };
 
