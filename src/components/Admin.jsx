@@ -20,7 +20,10 @@ const AdminDashboard = () => {
       <div className='container my-5 shadow p-4 rounded'>
         <div className='container' id='accordion'>
           {users.map((user) => (
-            <div className='card mb-4' key={user._id}>
+            <div
+              className='card mb-4'
+              key={user._id}
+              style={{ height: "75vh", overflowY: "scroll" }}>
               <div className='card-header'>
                 <a className='card-link' data-toggle='collapse' href='#name'>
                   {user.name}
@@ -29,16 +32,15 @@ const AdminDashboard = () => {
               <div className='card-body'>
                 <p>Email: {user.email}</p>
               </div>
-              <table className='table table-hover'>
-                <thead>
-                  <tr>
-                    <th>Key</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {user.submission.map((sub) => (
-                    <React.Fragment key={sub.hintTitle}>
+              <div className='card-body mb-4'>
+                <p className='text-primary'>All Submissions</p>
+              </div>
+              {user.submission.map((sub) => (
+                <div className='mb-4'>
+                  <table
+                    className='table table-hover w-75 mx-auto shadow'
+                    key={sub.hintTitle}>
+                    <tbody>
                       <tr>
                         <th>Hint Title: </th>
                         <td>{sub.hintTitle}</td>
@@ -51,14 +53,14 @@ const AdminDashboard = () => {
                         <th>Result: </th>
                         <td>{sub.isCorrect ? "Correct" : " Wrong"}</td>
                       </tr>
-                      <tr style={{ borderBottom: "1px solid blue" }}>
+                      <tr>
                         <th>Time Stamp: </th>
                         <td>{sub.timeStamp}</td>
                       </tr>
-                    </React.Fragment>
-                  ))}
-                </tbody>
-              </table>
+                    </tbody>
+                  </table>
+                </div>
+              ))}
             </div>
           ))}
         </div>

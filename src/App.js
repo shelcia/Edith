@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Form from "./components/Form";
 import AdminDashboard from "./components/Admin";
+import Error404 from "./components/Error404";
 
 import "./styles/style.css";
 
@@ -21,6 +22,7 @@ const App = () => {
             path='/admin/ffggghhhhjhjtytytyfgfgfzszs'
             component={AdminDashboard}
           />
+          <Route component={Error404} />
         </Switch>
       </BrowserRouter>
     </React.Fragment>
