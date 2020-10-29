@@ -34,13 +34,12 @@ const Signup = () => {
     };
 
     try {
-      const result = await axios.post(`${URL}api/auth/register`, response);
+      await axios.post(`${URL}api/auth/register`, response);
       setIsLoading(false);
-      console.log(result);
       successNotify("Signup Successfull ! Please Login to continue..👩🏽‍💻 ");
     } catch (e) {
       setIsLoading(false);
-      // console.log(`Axios request failed: ${e}`);
+      console.log(`Axios request failed: ${e}`);
       errorNotify("Either User already exists or check your connection");
     }
   };

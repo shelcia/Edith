@@ -103,7 +103,7 @@ const Form = () => {
 
   //EXECUTES WHEN HINT IS OPENED BY USER
   const openHint = (event, id, title) => {
-    console.log(user.isHintOpen);
+    // console.log(user.isHintOpen);
     event.preventDefault();
     let hintsOpened = JSON.parse(localStorage.getItem("Edith-hintsOpened"));
 
@@ -113,8 +113,6 @@ const Form = () => {
     } else {
       return;
     }
-
-    console.log(hintsOpened);
 
     const updatedOpenHints = {
       ...user,
@@ -149,11 +147,10 @@ const Form = () => {
         point = point + 20;
       }
     });
+
     let hintsOpened = localStorage.getItem("Edith-hintsOpened");
-    console.log(JSON.parse(hintsOpened).length);
     point = point - (JSON.parse(hintsOpened).length - 1) * 5;
 
-    console.log("point", point);
     const response = {
       point: point,
     };
