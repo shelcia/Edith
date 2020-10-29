@@ -8,8 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Form = () => {
   const [hints, setHints] = useState([]);
   const history = useHistory();
-  const [submission, setSubmission] = useState([]);
-  const [isHintOpen, setIsHintOpen] = useState([]);
+  const [user, setUser] = useState([]);
 
   const URL = process.env.REACT_APP_HEROKU_LINK;
   const token = localStorage.getItem("Edith-token");
@@ -27,12 +26,27 @@ const Form = () => {
     toast.error(message);
   };
 
+  useEffect(() => {
+    const ac = new AbortController();
+    axios({
+      url: `${URL}api/auth/user/${userId}`,
+      method: "get",
+      headers: headers,
+    })
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return () => ac.abort(); // Abort both fetches on unmount
+  }, [URL, headers, userId]);
+
   //GET HINTS
   useEffect(() => {
     axios
       .get(`${URL}api/hint/hints`)
       .then((response) => {
-        // console.log(response.data);
         setHints(response.data);
       })
       .catch((error) => console.log(error));
@@ -44,9 +58,9 @@ const Form = () => {
 
   //CHECK ANSWER ONCE USER CLICK SUBMIT
   const checkAnswers = (event, id, title) => {
+    console.log(user);
     event.preventDefault();
     const ids = document.getElementById(`${id}-input`);
-    // console.log(ids.value);
 
     if (ids.value === "") {
       failNotify("We don't want empty input fields");
@@ -57,30 +71,16 @@ const Form = () => {
     const result = hints.filter((hint) => hint._id === id);
     if (result[0].answer === ids.value) check = true;
     else check = false;
-    axios({
-      url: `${URL}api/auth/user/${userId}`,
-      method: "get",
-      headers: headers,
-    })
-      .then((response) => {
-        setSubmission(response.data.submission);
-        // setIsHintOpen(response.data.isHintOpen);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
     const response = {
-      submission: [
-        ...submission,
-        {
-          id: id,
-          hintTitle: title,
-          answer: ids.value,
-          timeStamp: Date.now(),
-          isCorrect: check,
-        },
-      ],
+      ...user,
+      submission: user.submission.concat({
+        id: id,
+        hintTitle: title,
+        answer: ids.value,
+        timeStamp: Date.now(),
+        isCorrect: check,
+      }),
     };
 
     axios({
@@ -90,63 +90,47 @@ const Form = () => {
       headers: headers,
     })
       .then((response) => {
-        // console.log(response);
+        console.log("submitted succesfully");
         successNotify("Submitted Successfully !!");
       })
       .catch((err) => {
         console.log(err);
+        failNotify("Oops check you network connection !");
       });
   };
 
   //EXECUTES WHEN HINT IS OPENED BY USER
   const openHint = (event, id, title) => {
+    console.log(user.isHintOpen);
     event.preventDefault();
     let hintsOpened = JSON.parse(localStorage.getItem("Edith-hintsOpened"));
 
-    console.log(hintsOpened);
     if (!hintsOpened.includes(id)) {
-      // console.log("he");
       hintsOpened = [...hintsOpened, id];
-      console.log(hintsOpened);
       localStorage.setItem(`Edith-hintsOpened`, JSON.stringify(hintsOpened));
+    } else {
+      return;
     }
 
-    // if (!hintsOpened.includes(id)) {
-    //   hintsOpened = hintsOpened.push(id);
-    //   // console.log(hintsOpened.length);
-    //   localStorage.setItem("Edith-hintsOpened", hintsOpened);
-    // }
-
     console.log(hintsOpened);
 
-    axios({
-      url: `${URL}api/auth/user/${userId}`,
-      method: "get",
-      headers: headers,
-    })
-      .then((response) => {
-        setIsHintOpen(response.data.isHintOpen);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // console.log("Hint Opened");
-    // console.log("Hints", isHintOpen);
-    const response = {
-      isHintOpen: [
-        ...isHintOpen,
-        { id: id, hintTitle: title, timeStamp: Date.now() },
-      ],
+    const updatedOpenHints = {
+      ...user,
+      isHintOpen: user.isHintOpen.concat({
+        id: id,
+        hintTitle: title,
+        timeStamp: Date.now(),
+      }),
     };
 
     axios({
       url: `${URL}api/auth/user/${userId}`,
       method: "put",
-      data: response,
+      data: updatedOpenHints,
       headers: headers,
     })
       .then((response) => {
-        // console.log(response)
+        console.log("Hints recorded");
       })
       .catch((err) => {
         console.log(err);
@@ -156,7 +140,6 @@ const Form = () => {
   const calculateResults = (event) => {
     event.preventDefault();
     let point = 0;
-    // console.log(hints);
 
     // eslint-disable-next-line array-callback-return
     hints.map((hint) => {
@@ -165,8 +148,8 @@ const Form = () => {
       }
     });
     let hintsOpened = localStorage.getItem("Edith-hintsOpened");
-
-    point = point - (hintsOpened.length - 1) * 5;
+    console.log(JSON.parse(hintsOpened).length);
+    point = point - (JSON.parse(hintsOpened).length - 1) * 5;
 
     console.log("point", point);
     const response = {
@@ -179,7 +162,7 @@ const Form = () => {
       headers: headers,
     })
       .then((response) => {
-        // console.log(response)
+        console.log("response sent");
       })
       .catch((err) => {
         console.log(err);
@@ -250,13 +233,3 @@ const Form = () => {
 };
 
 export default Form;
-
-// <button
-// className='btn btn-primary'
-// type='submit'
-// onClick={(e) => checkAnswers(e, hint._id)}>
-// Submit
-// </button>
-// <p className='font-weight-light mt-1 text-primary'>
-// Last Submitted: {hint.lastSubmitted}
-// </p>
