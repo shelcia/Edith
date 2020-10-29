@@ -61,8 +61,10 @@ const Form = () => {
     event.preventDefault();
     const ids = document.getElementById(`${id}-input`);
     console.log(ids.value);
-    // const result = hints.filter((hint) => hint._id === id);
-
+    let check = "";
+    const result = hints.filter((hint) => hint._id === id);
+    if (result[0].answer === ids.value) check = true;
+    else check = false;
     axios({
       url: `${URL}api/auth/user/${userId}`,
       method: "get",
@@ -79,7 +81,13 @@ const Form = () => {
     const response = {
       submission: [
         ...submission,
-        { id: id, hintTitle: title, answer: ids.value, timeStamp: Date.now() },
+        {
+          id: id,
+          hintTitle: title,
+          answer: ids.value,
+          timeStamp: Date.now(),
+          isCorrect: check,
+        },
       ],
     };
 
@@ -131,7 +139,7 @@ const Form = () => {
         <hr />
         {hints.map((hint) => (
           <React.Fragment key={hint._id}>
-            <form className='mb-2'>
+            <form className='mb-3'>
               <div className='row'>
                 <div className='col-sm-8'>
                   <input
