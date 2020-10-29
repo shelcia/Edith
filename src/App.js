@@ -18,10 +18,7 @@ const App = () => {
           <Route path='/login' component={Login} />
           <Route path='/signup' component={Signup} />
           <Route path='/user/:id' component={Form} />
-          <Route
-            path='/admin/ffggghhhhjhjtytytyfgfgfzszs'
-            component={AdminDashboard}
-          />
+          <Route path='/admin/shelcia' component={AdminDashboard} />
           <Route component={Error404} />
         </Switch>
       </BrowserRouter>
