@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Edith/static/css/main.9d8210ec.chunk.css",
+    "main.js": "/Edith/static/js/main.f2b6c67c.chunk.js",
+    "main.js.map": "/Edith/static/js/main.f2b6c67c.chunk.js.map",
+    "runtime-main.js": "/Edith/static/js/runtime-main.e8e32013.js",
+    "runtime-main.js.map": "/Edith/static/js/runtime-main.e8e32013.js.map",
+    "static/css/2.ccc6f86f.chunk.css": "/Edith/static/css/2.ccc6f86f.chunk.css",
+    "static/js/2.31bfb83f.chunk.js": "/Edith/static/js/2.31bfb83f.chunk.js",
+    "static/js/2.31bfb83f.chunk.js.map": "/Edith/static/js/2.31bfb83f.chunk.js.map",
+    "index.html": "/Edith/index.html",
+    "static/css/2.ccc6f86f.chunk.css.map": "/Edith/static/css/2.ccc6f86f.chunk.css.map",
+    "static/css/main.9d8210ec.chunk.css.map": "/Edith/static/css/main.9d8210ec.chunk.css.map",
+    "static/js/2.31bfb83f.chunk.js.LICENSE.txt": "/Edith/static/js/2.31bfb83f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e8e32013.js",
+    "static/css/2.ccc6f86f.chunk.css",
+    "static/js/2.31bfb83f.chunk.js",
+    "static/css/main.9d8210ec.chunk.css",
+    "static/js/main.f2b6c67c.chunk.js"
+  ]
+}
