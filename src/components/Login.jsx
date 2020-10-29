@@ -32,21 +32,25 @@ const Login = () => {
     try {
       const result = await axios.post(`${URL}api/auth/login`, response);
       setIsLoading(false);
+
       if (result.data.isParticipated) {
         history.push("/noentrybro");
       }
-      // console.log(result);
       localStorage.setItem(`${PREFIX}token`, result.data.token);
       localStorage.setItem(`${PREFIX}id`, result.data._id);
       localStorage.setItem(`${PREFIX}hintsOpened`, localArray);
 
-      const isLoggedIn = { isParticipated: true };
+      const updatedResponse = { ...result.data, isParticipated: true };
+
+      const headers = {
+        "auth-token": result.data.token,
+      };
 
       axios({
         url: `${URL}api/auth/user/${result.data._id}`,
         method: "put",
-        data: isLoggedIn,
-        headers: result.data.token,
+        data: updatedResponse,
+        headers: headers,
       })
         .then((response) => {
           console.log("entry registered succesfully");
