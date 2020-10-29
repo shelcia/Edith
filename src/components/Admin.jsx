@@ -50,10 +50,8 @@ const AdminDashboard = () => {
                 <p className='text-primary'>All Submissions</p>
               </div>
               {user.submission.map((sub) => (
-                <div className='mb-4'>
-                  <table
-                    className='table table-hover w-75 mx-auto shadow'
-                    key={sub.timeStamp}>
+                <div className='mb-4' key={sub.timeStamp}>
+                  <table className='table table-hover w-75 mx-auto shadow'>
                     <tbody>
                       <tr>
                         <th>Hint Title: </th>
@@ -81,14 +79,12 @@ const AdminDashboard = () => {
                 <p className='text-primary'>All Opened Hints</p>
               </div>
               {user.isHintOpen.map((hint) => (
-                <div className='mb-4'>
-                  <table
-                    className='table table-hover w-75 mx-auto shadow'
-                    key={hint.timeStamp}>
+                <div className='mb-4' key={hint.timeStamp}>
+                  <table className='table table-hover w-75 mx-auto shadow'>
                     <tbody>
                       <tr>
-                        <th>Hint ID: </th>
-                        <td>{hint.id}</td>
+                        <th>Hint Title: </th>
+                        <td>{hint.hintTitle}</td>
                       </tr>
                       <tr>
                         <th>Time Stamp: </th>

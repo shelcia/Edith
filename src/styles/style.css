@@ -1,4 +1,27 @@
 * {
   font-family: "Roboto Mono", monospace;
 }
+
+/* width */
+body ::-webkit-scrollbar {
+  height: 4px;
+  /*for horizonatal scrollbar*/
+  width: 4px;
+}
+
+/* Track */
+body ::-webkit-scrollbar-track {
+  background: #f1f1f100;
+}
+
+/* Handle */
+body ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+body ::-webkit-scrollbar-thumb:hover {
+  background: #007bff;
+}
 /*# sourceMappingURL=style.css.map */

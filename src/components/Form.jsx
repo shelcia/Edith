@@ -23,16 +23,9 @@ const Form = () => {
   const successNotify = (message) => {
     toast.success(message);
   };
-
-  // const convertDate = (date) => {
-  //   const dates = new Date(date);
-  //   const formattedDate = Intl.DateTimeFormat("en-US", {
-  //     year: "numeric",
-  //     month: "short",
-  //     day: "2-digit",
-  //   }).format(dates);
-  //   return formattedDate;
-  // };
+  const failNotify = (message) => {
+    toast.error(message);
+  };
 
   useEffect(() => {
     axios
@@ -61,6 +54,12 @@ const Form = () => {
     event.preventDefault();
     const ids = document.getElementById(`${id}-input`);
     console.log(ids.value);
+
+    if (ids.value === "") {
+      failNotify("We don't want empty input fields");
+      return;
+    }
+
     let check = "";
     const result = hints.filter((hint) => hint._id === id);
     if (result[0].answer === ids.value) check = true;
@@ -106,11 +105,14 @@ const Form = () => {
       });
   };
 
-  const openHint = (event, id) => {
+  const openHint = (event, id, title) => {
     event.preventDefault();
 
     const response = {
-      isHintOpen: [...isHintOpen, { id: id, timeStamp: Date.now() }],
+      isHintOpen: [
+        ...isHintOpen,
+        { id: id, hintTitle: title, timeStamp: Date.now() },
+      ],
     };
 
     axios({
@@ -162,7 +164,7 @@ const Form = () => {
                     type='button'
                     data-toggle='modal'
                     data-target={`#modal${hint._id}`}
-                    onClick={(e) => openHint(e, hint._id)}>
+                    onClick={(e) => openHint(e, hint._id, hint.hintTitle)}>
                     Show Hint
                   </button>
                 </div>
