@@ -22,6 +22,12 @@ const Signup = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+
+    if (password.current.value.length < 6) {
+      errorNotify("Your password should have atleast 6 characters  👻");
+      return;
+    }
+
     setIsLoading(true);
     const URL = process.env.REACT_APP_HEROKU_LINK;
 
@@ -48,7 +54,7 @@ const Signup = () => {
     <React.Fragment>
       <ToastContainer />
       <div
-        className='container mt-5 shadow py-3 rounded'
+        className='container my-5 shadow py-3 rounded'
         style={{ maxWidth: "500px" }}>
         <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
           Signup
@@ -61,13 +67,13 @@ const Signup = () => {
               type='text'
               ref={name}
               className='form-control'
-              placeholder='Enter email'
+              placeholder='Enter name'
               required
             />
-            <div className='invalid-feedback'>Please fill out this field.</div>
+            <div className='invalid-feedback'>Please fill out your name.</div>
           </div>
           <div className='form-group'>
-            <label htmlFor='uname'>Email:</label>
+            <label htmlFor='email'>Email:</label>
             <input
               type='email'
               ref={user}
@@ -86,6 +92,12 @@ const Signup = () => {
               placeholder='Enter password'
               required
             />
+            <div className='text-danger my-4' style={{ fontSize: "0.8rem" }}>
+              <p>
+                Your password should have {"  "} <strong>6 characters</strong>{" "}
+                atleast !!🚨🚨
+              </p>
+            </div>
             <div className='invalid-feedback'>Please fill out this field.</div>
           </div>
           <div className='text-center'>

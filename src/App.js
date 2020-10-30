@@ -20,7 +20,10 @@ const App = () => {
           <Route path='/login' component={Login} />
           <Route path='/signup' component={Signup} />
           <Route path='/user/:id' component={Form} />
-          <Route path='/admin/shelcia' component={AdminDashboard} />
+          <Route
+            path='/admin/jithujiladimittakilaadi'
+            component={AdminDashboard}
+          />
           <Route path='/finalpage' component={FinalPage} />
           <Route path='/noentrybro' component={NoEntry} />
           <Route component={Error404} />

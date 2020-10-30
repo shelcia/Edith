@@ -67,11 +67,12 @@ const Form = () => {
     // console.log(user);
     event.preventDefault();
     const ids = document.getElementById(`${id}-input`);
-
     if (ids.value === "") {
       failNotify("We don't want empty input fields");
       return;
     }
+
+    toast.warning("Your submission is on its way 🚚💨 !!");
 
     let check = "";
     const result = hints.filter((hint) => hint._id === id);
@@ -97,11 +98,11 @@ const Form = () => {
     })
       .then((response) => {
         console.log("submitted succesfully");
-        successNotify("Submitted Successfully !!");
+        successNotify("Submitted Successfully 🔥🔥 !!");
       })
       .catch((err) => {
         console.log(err);
-        failNotify("Oops check you network connection !");
+        failNotify("Oops check you network connection 🥺🥺!");
       });
   };
 
@@ -141,23 +142,24 @@ const Form = () => {
       });
   };
 
+  //CALCULATE RESULTS ON CLICKING FINISH BUTTON
   const calculateResults = (event) => {
     event.preventDefault();
     let point = 0;
 
+    let hintsOpened = JSON.parse(localStorage.getItem("Edith-hintsOpened"));
     // eslint-disable-next-line array-callback-return
     hints.map((hint) => {
       if (hint.answer === document.getElementById(`${hint._id}-input`).value) {
-        point = point + 20;
+        if (hintsOpened.includes(hint._id)) point = point + 15;
+        else point = point + 20;
       }
     });
-
-    let hintsOpened = localStorage.getItem("Edith-hintsOpened");
-    point = point - (JSON.parse(hintsOpened).length - 1) * 5;
 
     const response = {
       point: point,
     };
+
     axios({
       url: `${URL}api/auth/user/${userId}`,
       method: "put",
@@ -196,7 +198,7 @@ const Form = () => {
                       type='text'
                       id={`${hint._id}-input`}
                       className='form-control'
-                      placeholder='Enter flag'
+                      placeholder={`Enter ${hint.flagTitle}`}
                       required
                     />
                   </div>
