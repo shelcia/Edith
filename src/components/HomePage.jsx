@@ -10,7 +10,7 @@ const HomePage = () => {
         className='container my-5 shadow py-3 rounded'
         style={{ maxWidth: "600px" }}>
         <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
-          EdiTH Club
+          EdiTH CTF
         </h3>
         <hr />
         <h5>Instructions</h5>
