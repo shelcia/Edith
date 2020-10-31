@@ -67,10 +67,12 @@ const Signup = () => {
               type='text'
               ref={name}
               className='form-control'
-              placeholder='Enter name'
+              placeholder='Enter name/team name'
               required
             />
-            <div className='invalid-feedback'>Please fill out your name.</div>
+            <div className='invalid-feedback'>
+              Please fill out your name/team name.
+            </div>
           </div>
           <div className='form-group'>
             <label htmlFor='email'>Email:</label>

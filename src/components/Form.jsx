@@ -151,7 +151,7 @@ const Form = () => {
     // eslint-disable-next-line array-callback-return
     hints.map((hint) => {
       if (hint.answer === document.getElementById(`${hint._id}-input`).value) {
-        if (hintsOpened.includes(hint._id)) point = point + 15;
+        if (hintsOpened.includes(hint._id)) point = point + 10;
         else point = point + 20;
       }
     });
@@ -182,7 +182,7 @@ const Form = () => {
         className='container my-5 shadow py-3 rounded'
         style={{ maxWidth: "800px" }}>
         <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
-          Edith Questions
+          EdiTH CTF
         </h3>
         <hr />
 

@@ -14,7 +14,7 @@ const HintModal = ({ hint, hintId, hintTitle }) => {
               <h5>{hintTitle}</h5>
               <p>{hint}</p>
               <p className='text-danger'>
-                <b>Note:</b> You have lost 5 points !
+                <b>Note:</b> You have lost 5 points !!
               </p>
             </div>
             <div className='modal-footer'>

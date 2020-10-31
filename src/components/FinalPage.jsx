@@ -22,7 +22,7 @@ const FinalPage = () => {
       <div className='w-100 h-100 d-flex justify-content-center'>
         <Confetti width={width} height={height} />
         <h3 style={{ marginTop: "50vh", transform: "translateY(-50%)" }}>
-          Thanks For Partcipating.. we will reveal the results soon !!!
+          Thanks For Participating.. We will reveal the results soon !!!
         </h3>
       </div>
       <div className='text-center'>

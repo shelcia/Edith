@@ -8,7 +8,7 @@ const Error = () => {
         className='container mt-5 shadow py-3 rounded'
         style={{ maxWidth: "500px" }}>
         <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
-          Edith Club
+          EdiTH Club
         </h3>
         <hr />
 
