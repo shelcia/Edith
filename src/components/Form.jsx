@@ -15,6 +15,7 @@ const Form = () => {
   const URL = process.env.REACT_APP_HEROKU_LINK;
   const token = localStorage.getItem("Edith-token");
   const userId = localStorage.getItem("Edith-id");
+  let submitted = JSON.parse(localStorage.getItem("Edith-buttonSubmitted"));
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const headers = {
@@ -99,6 +100,13 @@ const Form = () => {
       .then((response) => {
         console.log("submitted succesfully");
         successNotify("Submitted Successfully 🔥🔥 !!");
+        if (!submitted.includes(id)) {
+          submitted = [...submitted, id];
+          localStorage.setItem(
+            `Edith-buttonSubmitted`,
+            JSON.stringify(submitted)
+          );
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -151,8 +159,8 @@ const Form = () => {
     // eslint-disable-next-line array-callback-return
     hints.map((hint) => {
       if (hint.answer === document.getElementById(`${hint._id}-input`).value) {
-        if (hintsOpened.includes(hint._id)) point = point + 10;
-        else point = point + 20;
+        if (hintsOpened.includes(hint._id)) point = point + 5;
+        else point = point + 10;
       }
     });
 
@@ -206,6 +214,7 @@ const Form = () => {
                     <button
                       className='btn btn-primary'
                       type='submit'
+                      id={`button-${hint._id}`}
                       onClick={(e) =>
                         checkAnswers(e, hint._id, hint.hintTitle)
                       }>
@@ -222,6 +231,11 @@ const Form = () => {
                   </div>
                 </div>
               </form>
+              {submitted.includes(hint._id) ? (
+                <p className='text-success mt-0'>Submitted</p>
+              ) : (
+                <p className='text-danger mt-0'>Not Submitted</p>
+              )}
               <HintModal
                 hintTitle={hint.hintTitle}
                 hint={hint.hint}

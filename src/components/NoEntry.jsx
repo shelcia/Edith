@@ -25,7 +25,7 @@ const NoEntry = () => {
             <a href='https://www.facebook.com/csclubiiitdm'>Facebook</a>
           </div>
           <p className='mt-3'>
-            Think it's a mistake ? 🤔🤔 then call us at{" "}
+            Think it's a mistake ? 🤔🤔 then mail us at{" "}
             <a href='mailto:coe18b046@iiitdm.ac.in'>coe18b046@iiitdm.ac.in</a>
           </p>
         </div>

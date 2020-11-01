@@ -13,33 +13,67 @@ const HomePage = () => {
           EdiTH CTF
         </h3>
         <hr />
-        <h5>Instructions</h5>
+        <h5>
+          Instructions{" "}
+          <span className='text-danger' style={{ fontSize: "0.8rem" }}>
+            Please read it carefully 🚨🚨!!
+          </span>
+        </h5>
         <ul>
           <li>
-            Please sign up before logging in. If you’re a team, sign up with
-            only one set of credentials - a valid email id of either participant
-            and the name of your team.
+            Please <span className='text-primary'>sign up</span> before logging
+            in. If you’re a team, sign up with only one set of credentials - a
+            valid email id of either participant and the name of your team.
           </li>
           <li>
-            Each flag will be of the form - edith <code>{str}</code>. The string
-            inside the curly braces has to be submitted. The string will start
-            with <code>flag-{code}</code> this means you have found the nth flag
+            Each flag will be of the form - <code>edith{str}</code>.{" "}
+            <mark>
+              <b>The string inside the curly braces has to be submitted!!!.</b>
+            </mark>{" "}
+            The string will start with <code>flag-{code}</code> this means you
+            have found the nth flag
             <b className='px-2'>e.g. flag2_utfutfujygojn</b> represents the
             second flag.
           </li>
           <li>
             You can submit each flag in the corresponding text box. Please
             remember that{" "}
-            <i>you should submit each flag as soon as you find them</i>, and not
-            all of them as a whole - this is because we note the timestamp for
-            which each flag is found.
+            <b>you should submit each flag as soon as you find them</b>, and not
+            all of them as a whole - this is because we note the{" "}
+            <span className='text-primary'>timestamp</span> for which each flag
+            is found.
           </li>
           <li>
-            Once the <span className='text-primary'>'Finish'</span> button is
-            clicked, you cannot log back in. Do not click it before you are done
-            with the whole event.
+            <b>
+              Once the <span className='text-primary'>'Finish'</span> button is
+              clicked, you cannot log back in.
+            </b>{" "}
+            Do not click it before you are done with the whole event.
           </li>
         </ul>
+        <h5 className='mt-5 mb-4'>Marking scheme</h5>
+        <table
+          className='table table-hover mx-auto'
+          style={{ width: "90%", marginBottom: "1.5rem" }}>
+          <tbody>
+            <tr>
+              <td>Correct answer without hint</td>
+              <th>10 points</th>
+            </tr>
+            <tr>
+              <td>Correct answer with hint</td>
+              <th>5 points</th>
+            </tr>
+            <tr>
+              <td>Incorrect answer with hint </td>
+              <th>0 points</th>
+            </tr>
+            <tr>
+              <td>Incorrect answer without hint</td>
+              <th>0 points</th>
+            </tr>
+          </tbody>
+        </table>
         <hr />
         <div className='text-center d-flex align-item-center justify-content-between w-50 mx-auto'>
           <Link to='/signup'>Signup</Link>
