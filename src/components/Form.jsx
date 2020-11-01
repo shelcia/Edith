@@ -5,6 +5,7 @@ import HintModal from "./HintModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./Loading";
+import InstrcutionsModal from "./InstructionModal";
 
 const Form = () => {
   const [hints, setHints] = useState([]);
@@ -191,7 +192,15 @@ const Form = () => {
         style={{ maxWidth: "800px" }}>
         <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
           EdiTH CTF
+          <span
+            data-toggle='modal'
+            data-target={`#modalInstructions`}
+            className='text-primary'
+            style={{ fontSize: "1rem", cursor: "pointer" }}>
+            (Instructions)
+          </span>
         </h3>
+        <InstrcutionsModal />
         <hr />
 
         {isLoading ? (
