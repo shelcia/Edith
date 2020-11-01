@@ -156,6 +156,18 @@ const Form = () => {
     event.preventDefault();
     let point = 0;
 
+    let value = hints.map((hint) => {
+      if (!submitted.includes(hint._id)) {
+        failNotify(`Please submit answer for ${hint.flagTitle} !!!`);
+        return false;
+      } else {
+        return true;
+      }
+    });
+    if (value.includes(false)) {
+      return;
+    }
+
     let hintsOpened = JSON.parse(localStorage.getItem("Edith-hintsOpened"));
     // eslint-disable-next-line array-callback-return
     hints.map((hint) => {
