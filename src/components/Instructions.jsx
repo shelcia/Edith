@@ -5,7 +5,7 @@ const Instrcutions = () => {
   const code = "<n>_<text> ";
   return (
     <React.Fragment>
-      <h5>
+      <h5 className='mb-4'>
         Instructions{" "}
         <span className='text-danger' style={{ fontSize: "0.8rem" }}>
           Please read it carefully 🚨🚨!!
@@ -41,6 +41,14 @@ const Instrcutions = () => {
             clicked, you cannot log back in.
           </b>{" "}
           Do not click it before you are done with the whole event.
+        </li>
+        <li>
+          Please remember to{" "}
+          <b>
+            press the <span className='text-primary'>''Submit'</span> button for
+            all flag fields
+          </b>
+          , even if the input is empty before pressing the 'Finish' button.
         </li>
       </ul>
       <h5 className='mt-5 mb-4'>Marking scheme</h5>
