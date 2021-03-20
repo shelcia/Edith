@@ -156,9 +156,13 @@ const Form = () => {
     event.preventDefault();
     let point = 0;
 
+    console.log();
+
     let value = hints.map((hint) => {
       if (!submitted.includes(hint._id)) {
-        failNotify(`Please submit answer for ${hint.flagTitle} !!!`);
+        failNotify(
+          `Please submit answer for Flag ${hint.hintTitle.split(" ")[1]} !!!`
+        );
         return false;
       } else {
         return true;
@@ -169,11 +173,12 @@ const Form = () => {
     }
 
     let hintsOpened = JSON.parse(localStorage.getItem("Edith-hintsOpened"));
+    console.log(hintsOpened);
     // eslint-disable-next-line array-callback-return
     hints.map((hint) => {
       if (hint.answer === document.getElementById(`${hint._id}-input`).value) {
-        if (hintsOpened.includes(hint._id)) point = point + 5;
-        else point = point + 10;
+        if (hintsOpened.includes(hint._id)) point = point + 0.5 * hint.points;
+        else point = point + hint.points;
       }
     });
 
@@ -200,15 +205,17 @@ const Form = () => {
     <React.Fragment>
       <ToastContainer />
       <div
-        className='container my-5 shadow py-3 rounded'
-        style={{ maxWidth: "800px" }}>
-        <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
-          EdiTH CTF
+        className="container my-5 shadow py-3 rounded"
+        style={{ maxWidth: "800px" }}
+      >
+        <h3 style={{ borderLeft: "3.5px solid red" }} className="pl-3">
+          EdiTH sudoCTF
           <span
-            data-toggle='modal'
+            data-toggle="modal"
             data-target={`#modalInstructions`}
-            className='text-primary'
-            style={{ fontSize: "1rem", cursor: "pointer" }}>
+            className="text-primary"
+            style={{ fontSize: "1rem", cursor: "pointer" }}
+          >
             (Instructions)
           </span>
         </h3>
@@ -216,46 +223,49 @@ const Form = () => {
         <hr />
 
         {isLoading ? (
-          <Loading message='Loading hints and flags' />
+          <Loading message="Loading hints and flags" />
         ) : (
-          hints.map((hint) => (
+          hints.map((hint, index) => (
             <React.Fragment key={hint._id}>
-              <form className='mb-3'>
-                <div className='row'>
-                  <div className='col-sm-8'>
+              <form className="mb-3">
+                <div className="row">
+                  <div className="col-sm-8">
                     <input
-                      type='text'
+                      type="text"
                       id={`${hint._id}-input`}
-                      className='form-control'
-                      placeholder={`Enter ${hint.flagTitle}`}
+                      className="form-control"
+                      placeholder={`Enter Flag ${index + 1}`}
                       required
                     />
                   </div>
-                  <div className='col-sm-4 text-right'>
+                  <div className="col-sm-4 text-right">
                     <button
-                      className='btn btn-primary'
-                      type='submit'
+                      className="btn btn-primary"
+                      type="submit"
                       id={`button-${hint._id}`}
-                      onClick={(e) =>
-                        checkAnswers(e, hint._id, hint.hintTitle)
-                      }>
+                      onClick={(e) => checkAnswers(e, hint._id, hint.hintTitle)}
+                    >
                       Submit
                     </button>
                     <button
-                      className='btn btn-outline-primary ml-2'
-                      type='button'
-                      data-toggle='modal'
+                      className="btn btn-outline-primary ml-2"
+                      type="button"
+                      data-toggle="modal"
                       data-target={`#modal${hint._id}`}
-                      onClick={(e) => openHint(e, hint._id, hint.hintTitle)}>
+                      onClick={(e) => openHint(e, hint._id, hint.hintTitle)}
+                    >
                       Show Hint
                     </button>
                   </div>
                 </div>
               </form>
+              <p>
+                Points: <b className="text-primary">{hint.points}</b>{" "}
+              </p>
               {submitted.includes(hint._id) ? (
-                <p className='text-success mt-0'>Submitted</p>
+                <p className="text-success mt-0">Submitted</p>
               ) : (
-                <p className='text-danger mt-0'>Not Submitted</p>
+                <p className="text-danger mt-0">Not Submitted</p>
               )}
               <HintModal
                 hintTitle={hint.hintTitle}
@@ -266,11 +276,12 @@ const Form = () => {
           ))
         )}
         <hr />
-        <div className='text-center'>
+        <div className="text-center">
           <button
-            className='btn btn-primary'
-            type='button'
-            onClick={(e) => calculateResults(e)}>
+            className="btn btn-primary"
+            type="button"
+            onClick={(e) => calculateResults(e)}
+          >
             Finish
           </button>
         </div>
