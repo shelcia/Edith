@@ -173,7 +173,6 @@ const Form = () => {
     }
 
     let hintsOpened = JSON.parse(localStorage.getItem("Edith-hintsOpened"));
-    console.log(hintsOpened);
     // eslint-disable-next-line array-callback-return
     hints.map((hint) => {
       if (hint.answer === document.getElementById(`${hint._id}-input`).value) {
