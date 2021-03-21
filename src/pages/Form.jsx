@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import HintModal from "./HintModal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "./Loading";
-import InstrcutionsModal from "./InstructionModal";
+import Loading from "../components/Loading";
+import InstructionsModal from "../components/InstructionModal";
+import HintModal from "../components/HintModal";
 
 const Form = () => {
   const [hints, setHints] = useState([]);
@@ -218,7 +218,7 @@ const Form = () => {
             (Instructions)
           </span>
         </h3>
-        <InstrcutionsModal />
+        <InstructionsModal />
         <hr />
 
         {isLoading ? (

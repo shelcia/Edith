@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import HomePage from "./components/HomePage";
+import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import Form from "./components/Form";
-import AdminDashboard from "./admin/AdminDashboard";
+import Form from "./pages/Form";
 import Error404 from "./pages/Error404";
 import FinalPage from "./pages/FinalPage";
-import NoEntry from "./components/NoEntry";
+import NoEntry from "./pages/NoEntry";
+import AdminDashboard from "./admin/AdminDashboard";
 
 import "./styles/style.css";
 
