@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminNavbar from "../components/AdminNavbar";
 
-const AdminDashboard = () => {
+const AllUsers = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -65,11 +65,7 @@ const AdminDashboard = () => {
                 style={{ height: "75vh", overflowY: "scroll" }}
               >
                 <div className="card-header">
-                  <a
-                    className="card-link"
-                    data-toggle="collapse"
-                    href={`#${user._id}`}
-                  >
+                  <a className="card-link" data-toggle="collapse" href="#name">
                     {user.name}
                   </a>
                 </div>
@@ -144,4 +140,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default AllUsers;

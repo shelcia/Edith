@@ -21,7 +21,7 @@ const AdminNavbar = () => {
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
+          <ul className="navbar-nav">
             <li className="nav-item">
               <NavLink className="nav-link" to="/admin/jithujiladimittakilaadi">
                 Participants
@@ -53,6 +53,7 @@ const AdminNavbar = () => {
               </NavLink>
             </li>
           </ul>
+          <button className="btn btn-danger ml-auto">Logout</button>
         </div>
       </nav>
     </React.Fragment>
