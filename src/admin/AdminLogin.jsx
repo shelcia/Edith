@@ -27,9 +27,6 @@ const AdminLogin = () => {
       password: password.current.value,
     };
 
-    const localArray = JSON.stringify(["hintsOpened"]);
-    const buttonArray = JSON.stringify(["submitted"]);
-
     try {
       const result = await axios.post(`${URL}api/auth/login`, response);
       setIsLoading(false);
@@ -41,8 +38,6 @@ const AdminLogin = () => {
       }
       localStorage.setItem(`${PREFIX}token`, result.data.token);
       localStorage.setItem(`${PREFIX}id`, result.data._id);
-      localStorage.setItem(`${PREFIX}hintsOpened`, localArray);
-      localStorage.setItem(`${PREFIX}buttonSubmitted`, buttonArray);
 
       const updatedResponse = { ...result.data, isParticipated: true };
 

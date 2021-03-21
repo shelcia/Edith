@@ -8,6 +8,7 @@ import Error404 from "./pages/Error404";
 import FinalPage from "./pages/FinalPage";
 import NoEntry from "./pages/NoEntry";
 import AdminDashboard from "./admin/AdminDashboard";
+import AdminLogin from "./admin/AdminLogin";
 
 import "./styles/style.css";
 
@@ -20,12 +21,13 @@ const App = () => {
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/user/:id" component={Form} />
+          <Route path="/finalpage" component={FinalPage} />
+          <Route path="/noentrybro" component={NoEntry} />
+          <Route path="/admin/login" component={AdminLogin} />
           <Route
             path="/admin/jithujiladimittakilaadi"
             component={AdminDashboard}
           />
-          <Route path="/finalpage" component={FinalPage} />
-          <Route path="/noentrybro" component={NoEntry} />
           <Route component={Error404} />
         </Switch>
       </BrowserRouter>
