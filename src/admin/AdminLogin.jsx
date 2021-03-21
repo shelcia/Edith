@@ -32,7 +32,7 @@ const AdminLogin = () => {
       console.log(result);
       setIsLoading(false);
 
-      localStorage.setItem(`${PREFIX}token`, result.data.token);
+      localStorage.setItem(`${PREFIX}admin-token`, result.data.message);
 
       history.push(`/admin/jithujiladimittakilaadi`);
     } catch (e) {

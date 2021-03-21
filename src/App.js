@@ -9,6 +9,7 @@ import FinalPage from "./pages/FinalPage";
 import NoEntry from "./pages/NoEntry";
 import AdminDashboard from "./admin/AdminDashboard";
 import AdminLogin from "./admin/AdminLogin";
+import AllUsers from "./admin/Users";
 
 import "./styles/style.css";
 
@@ -25,8 +26,14 @@ const App = () => {
           <Route path="/noentrybro" component={NoEntry} />
           <Route path="/admin/login" component={AdminLogin} />
           <Route
+            exact
             path="/admin/jithujiladimittakilaadi"
             component={AdminDashboard}
+          />
+          <Route
+            exact
+            path="/admin/jithujiladimittakilaadi/users"
+            component={AllUsers}
           />
           <Route component={Error404} />
         </Switch>
