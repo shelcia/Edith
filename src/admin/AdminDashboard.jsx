@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Loading from "./Loading";
+import Loading from "../components/Loading";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -35,39 +35,40 @@ const AdminDashboard = () => {
 
   return (
     <React.Fragment>
-      <div className='container my-5 shadow p-4 rounded'>
+      <div className="container my-5 shadow p-4 rounded">
         {isLoading ? (
-          <Loading message='Loading Participant Details' />
+          <Loading message="Loading Participant Details" />
         ) : (
-          <div className='container' id='accordion'>
+          <div className="container" id="accordion">
             {users.map((user) => (
               <div
-                className='card mb-4'
+                className="card mb-4"
                 key={user._id}
-                style={{ height: "75vh", overflowY: "scroll" }}>
-                <div className='card-header'>
-                  <a className='card-link' data-toggle='collapse' href='#name'>
+                style={{ height: "75vh", overflowY: "scroll" }}
+              >
+                <div className="card-header">
+                  <a className="card-link" data-toggle="collapse" href="#name">
                     {user.name}
                   </a>
                 </div>
-                <div className='card-body'>
+                <div className="card-body">
                   <p>Email: {user.email}</p>
                 </div>
-                <div className='card-body mb-4'>
+                <div className="card-body mb-4">
                   <p>Points: {user.point}</p>
                 </div>
-                <div className='card-body mb-4'>
+                <div className="card-body mb-4">
                   <p>
                     Attendance:
                     {user.isParticipated ? "Attended" : "Not Attended"}
                   </p>
                 </div>
-                <div className='card-body mb-4'>
-                  <p className='text-primary'>All Submissions</p>
+                <div className="card-body mb-4">
+                  <p className="text-primary">All Submissions</p>
                 </div>
                 {user.submission.map((sub) => (
-                  <div className='mb-4' key={sub.timeStamp}>
-                    <table className='table table-hover w-75 mx-auto shadow'>
+                  <div className="mb-4" key={sub.timeStamp}>
+                    <table className="table table-hover w-75 mx-auto shadow">
                       <tbody>
                         <tr>
                           <th>Hint Title: </th>
@@ -91,12 +92,12 @@ const AdminDashboard = () => {
                     </table>
                   </div>
                 ))}
-                <div className='card-body mb-4'>
-                  <p className='text-primary'>All Opened Hints</p>
+                <div className="card-body mb-4">
+                  <p className="text-primary">All Opened Hints</p>
                 </div>
                 {user.isHintOpen.map((hint) => (
-                  <div className='mb-4' key={hint.timeStamp}>
-                    <table className='table table-hover w-75 mx-auto shadow'>
+                  <div className="mb-4" key={hint.timeStamp}>
+                    <table className="table table-hover w-75 mx-auto shadow">
                       <tbody>
                         <tr>
                           <th>Hint Title: </th>

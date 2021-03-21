@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loading from "./Loading";
+import Loading from "../components/Loading";
 
 const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -54,66 +54,67 @@ const Signup = () => {
     <React.Fragment>
       <ToastContainer />
       <div
-        className='container my-5 shadow py-3 rounded'
-        style={{ maxWidth: "500px" }}>
-        <h3 style={{ borderLeft: "3.5px solid red" }} className='pl-3'>
+        className="container my-5 shadow py-3 rounded"
+        style={{ maxWidth: "500px" }}
+      >
+        <h3 style={{ borderLeft: "3.5px solid red" }} className="pl-3">
           Signup
         </h3>
         <hr />
-        <form className='was-validated' onSubmit={onSubmit}>
-          <div className='form-group'>
-            <label htmlFor='uname'>Name:</label>
+        <form className="was-validated" onSubmit={onSubmit}>
+          <div className="form-group">
+            <label htmlFor="uname">Name:</label>
             <input
-              type='text'
+              type="text"
               ref={name}
-              className='form-control'
-              placeholder='Enter name/team name'
+              className="form-control"
+              placeholder="Enter name/team name"
               required
             />
-            <div className='invalid-feedback'>
+            <div className="invalid-feedback">
               Please fill out your name/team name.
             </div>
           </div>
-          <div className='form-group'>
-            <label htmlFor='email'>Email:</label>
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
             <input
-              type='email'
+              type="email"
               ref={user}
-              className='form-control'
-              placeholder='Enter email'
+              className="form-control"
+              placeholder="Enter email"
               required
             />
-            <div className='invalid-feedback'>Please enter valid email.</div>
+            <div className="invalid-feedback">Please enter valid email.</div>
           </div>
-          <div className='form-group'>
-            <label htmlFor='pwd'>Password:</label>
+          <div className="form-group">
+            <label htmlFor="pwd">Password:</label>
             <input
-              type='password'
+              type="password"
               ref={password}
-              className='form-control'
-              placeholder='Enter password'
+              className="form-control"
+              placeholder="Enter password"
               required
             />
-            <div className='text-danger my-4' style={{ fontSize: "0.8rem" }}>
+            <div className="text-danger my-4" style={{ fontSize: "0.8rem" }}>
               <p>
                 Your password should have {"  "} <strong>6 characters</strong>{" "}
                 atleast !!🚨🚨
               </p>
             </div>
-            <div className='invalid-feedback'>Please fill out this field.</div>
+            <div className="invalid-feedback">Please fill out this field.</div>
           </div>
-          <div className='text-center'>
+          <div className="text-center">
             {isLoading ? (
-              <Loading message='Please wait while we verify !' />
+              <Loading message="Please wait while we verify !" />
             ) : (
-              <button type='submit' className='btn btn-primary'>
+              <button type="submit" className="btn btn-primary">
                 Signup
               </button>
             )}
           </div>
         </form>
-        <div className='text-center mt-5'>
-          Already have an account? then <Link to='/login'>Login</Link>
+        <div className="text-center mt-5">
+          Already have an account? then <Link to="/login">Login</Link>
         </div>
       </div>
     </React.Fragment>
