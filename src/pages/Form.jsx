@@ -18,11 +18,6 @@ const Form = () => {
   const userId = localStorage.getItem("Edith-id");
   let submitted = JSON.parse(localStorage.getItem("Edith-buttonSubmitted"));
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const headers = {
-    "auth-token": token,
-  };
-
   const successNotify = (message) => {
     toast.success(message);
   };
@@ -32,28 +27,34 @@ const Form = () => {
 
   useEffect(() => {
     const ac = new AbortController();
+
+    const headers = {
+      "auth-token": token,
+    };
     axios({
-      url: `${URL}api/auth/user/${userId}`,
+      url: `${URL}api/common/user/${userId}`,
       method: "get",
       headers: headers,
     })
       .then((response) => {
-        setUser(response.data);
+        if (response.data.status === "200") {
+          setUser(response.data.message);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
     return () => ac.abort(); // Abort both fetches on unmount
-  }, [URL, headers, userId]);
+  }, [URL, token, userId]);
 
   //GET HINTS
   useEffect(() => {
     const ac = new AbortController();
     setIsLoading(true);
     axios
-      .get(`${URL}api/hint/hints`)
+      .get(`${URL}api/admin/hints`)
       .then((response) => {
-        setHints(response.data);
+        setHints(response.data.message);
         setIsLoading(false);
       })
       .catch((error) => console.log(error));
@@ -92,8 +93,12 @@ const Form = () => {
       }),
     };
 
+    const headers = {
+      "auth-token": token,
+    };
+
     axios({
-      url: `${URL}api/auth/user/${userId}`,
+      url: `${URL}api/common/user/${userId}`,
       method: "put",
       data: response,
       headers: headers,
@@ -137,8 +142,12 @@ const Form = () => {
       }),
     };
 
+    const headers = {
+      "auth-token": token,
+    };
+
     axios({
-      url: `${URL}api/auth/user/${userId}`,
+      url: `${URL}api/common/user/${userId}`,
       method: "put",
       data: updatedOpenHints,
       headers: headers,
@@ -185,8 +194,12 @@ const Form = () => {
       point: point,
     };
 
+    const headers = {
+      "auth-token": token,
+    };
+
     axios({
-      url: `${URL}api/auth/user/${userId}`,
+      url: `${URL}api/common/user/${userId}`,
       method: "put",
       data: response,
       headers: headers,

@@ -36,6 +36,33 @@ const AllUsers = () => {
       });
   }, [URL]);
 
+  const deleteUser = (e, id) => {
+    e.preventDefault();
+    const token = localStorage.getItem("admin-token");
+
+    const headers = {
+      Authorization: `Basic ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+
+    axios
+      .delete(`${process.env.REACT_APP_HEROKU_LINK}admin/users/${id}`, {
+        headers: headers,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.status === "200") {
+          toast.success(response.data.message);
+        } else if (response.data.status === "400") {
+          toast.error(response.data.message);
+        }
+      })
+      .catch((error) => {
+        errorNotify(error);
+      });
+  };
+
   return (
     <React.Fragment>
       <ToastContainer />
@@ -61,7 +88,12 @@ const AllUsers = () => {
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>
-                      <button className="btn btn-danger">Delete</button>
+                      <button
+                        className="btn btn-danger"
+                        onClick={(e) => deleteUser(e, item._id)}
+                      >
+                        Delete
+                      </button>
                     </td>
                   </tr>
                 ))}
