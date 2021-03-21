@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../components/Loading";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import AdminNavbar from "../components/AdminNavbar";
 
 const AdminDashboard = () => {
   const [users, setUsers] = useState([]);
@@ -8,16 +11,29 @@ const AdminDashboard = () => {
 
   const URL = process.env.REACT_APP_HEROKU_LINK;
 
+  const errorNotify = (message) => {
+    toast.error(message);
+  };
+
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(`${URL}api/auth/users`)
+      .get(`${URL}api/admin/users`)
       .then((response) => {
         // console.log(response.data);
-        setIsLoading(false);
-        setUsers(response.data);
+        if (response.data.status === "200") {
+          setIsLoading(false);
+          setUsers(response.data.message);
+        }
+        if (response.data.status === "500") {
+          setIsLoading(false);
+          errorNotify(response.data.message);
+        }
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        errorNotify(error);
+      });
   }, [URL]);
 
   const convertDate = (date) => {
@@ -35,6 +51,8 @@ const AdminDashboard = () => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
+      <AdminNavbar />
       <div className="container my-5 shadow p-4 rounded">
         {isLoading ? (
           <Loading message="Loading Participant Details" />

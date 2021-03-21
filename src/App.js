@@ -35,4 +35,6 @@ const App = () => {
   );
 };
 
+// REACT_APP_HEROKU_LINK = https://edith-club-backend.herokuapp.com/
+
 export default App;

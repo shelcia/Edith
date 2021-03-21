@@ -28,37 +28,13 @@ const AdminLogin = () => {
     };
 
     try {
-      const result = await axios.post(`${URL}api/auth/login`, response);
+      const result = await axios.post(`${URL}api/admin/admin/login`, response);
+      console.log(result);
       setIsLoading(false);
 
-      //IF USER HAS ALREADY PARTICIPATED
-      if (result.data.isParticipated) {
-        history.push("/noentrybro");
-        return;
-      }
       localStorage.setItem(`${PREFIX}token`, result.data.token);
-      localStorage.setItem(`${PREFIX}id`, result.data._id);
 
-      const updatedResponse = { ...result.data, isParticipated: true };
-
-      const headers = {
-        "auth-token": result.data.token,
-      };
-
-      axios({
-        url: `${URL}api/auth/user/${result.data._id}`,
-        method: "put",
-        data: updatedResponse,
-        headers: headers,
-      })
-        .then((response) => {
-          console.log("entry registered succesfully");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      history.push(`/user/${result.data._id}`);
+      history.push(`/admin/jithujiladimittakilaadi`);
     } catch (e) {
       setIsLoading(false);
       errorNotify("Please Check your credentials🧟‍♀️");
