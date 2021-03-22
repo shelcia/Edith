@@ -38,10 +38,12 @@ const AllUsers = () => {
 
   const deleteUser = (e, id) => {
     e.preventDefault();
+    console.log(id, `${process.env.REACT_APP_HEROKU_LINK}admin/users/${id}`);
+
     const token = localStorage.getItem("admin-token");
 
     const headers = {
-      Authorization: `Basic ${token}`,
+      "auth-token": token,
       "Content-Type": "application/json",
       Accept: "application/json",
     };
