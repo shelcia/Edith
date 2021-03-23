@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
@@ -10,10 +10,29 @@ import NoEntry from "./pages/NoEntry";
 import AdminDashboard from "./admin/AdminDashboard";
 import AdminLogin from "./admin/AdminLogin";
 import AllUsers from "./admin/Users";
+import Hint from "./admin/Hints";
+import General from "./admin/General";
 
 import "./styles/style.css";
 
 const App = () => {
+  function isAuthenticated() {
+    return localStorage.getItem("Edith-admin-token") ? true : false;
+  }
+
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuthenticated() ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/admin/login" />
+        )
+      }
+    />
+  );
+
   return (
     <React.Fragment>
       <BrowserRouter>
@@ -25,15 +44,25 @@ const App = () => {
           <Route path="/finalpage" component={FinalPage} />
           <Route path="/noentrybro" component={NoEntry} />
           <Route path="/admin/login" component={AdminLogin} />
-          <Route
+          <PrivateRoute
             exact
             path="/admin/jithujiladimittakilaadi"
             component={AdminDashboard}
           />
-          <Route
+          <PrivateRoute
             exact
             path="/admin/jithujiladimittakilaadi/users"
             component={AllUsers}
+          />
+          <PrivateRoute
+            exact
+            path="/admin/jithujiladimittakilaadi/hints"
+            component={Hint}
+          />
+          <PrivateRoute
+            exact
+            path="/admin/jithujiladimittakilaadi/instructions"
+            component={General}
           />
           <Route component={Error404} />
         </Switch>

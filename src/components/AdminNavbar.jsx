@@ -1,7 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 const AdminNavbar = () => {
+  const history = useHistory();
+
+  const logout = (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    history.push("/admin/login");
+  };
+
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light bg-light shadow">
@@ -31,7 +39,7 @@ const AdminNavbar = () => {
               <NavLink
                 className="nav-link"
                 exact
-                to="/admin/jithujiladimittakilaadi/hint"
+                to="/admin/jithujiladimittakilaadi/hints"
               >
                 Hint
               </NavLink>
@@ -53,7 +61,9 @@ const AdminNavbar = () => {
               </NavLink>
             </li>
           </ul>
-          <button className="btn btn-danger ml-auto">Logout</button>
+          <button className="btn btn-danger ml-auto" onClick={(e) => logout(e)}>
+            Logout
+          </button>
         </div>
       </nav>
     </React.Fragment>

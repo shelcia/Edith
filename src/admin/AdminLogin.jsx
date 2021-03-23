@@ -30,11 +30,14 @@ const AdminLogin = () => {
     try {
       const result = await axios.post(`${URL}api/admin/admin/login`, response);
       console.log(result);
-      setIsLoading(false);
-
-      localStorage.setItem(`${PREFIX}admin-token`, result.data.message);
-
-      history.push(`/admin/jithujiladimittakilaadi`);
+      if (result.data.status === "200") {
+        setIsLoading(false);
+        localStorage.setItem(`${PREFIX}admin-token`, result.data.message);
+        history.push(`/admin/jithujiladimittakilaadi`);
+      } else {
+        setIsLoading(false);
+        errorNotify(result.data.message);
+      }
     } catch (e) {
       setIsLoading(false);
       errorNotify("Please Check your credentials🧟‍♀️");
