@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import Loading from "../components/Loading";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,12 +15,11 @@ const AllUsers = () => {
     toast.error(message);
   };
 
-  useEffect(() => {
-    setIsLoading(true);
+  const getUsers = useCallback(() => {
     axios
       .get(`${URL}api/admin/users`)
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         if (response.data.status === "200") {
           setIsLoading(false);
           setUsers(response.data.message);
@@ -36,11 +35,18 @@ const AllUsers = () => {
       });
   }, [URL]);
 
+  useEffect(() => {
+    const ac = new AbortController();
+    setIsLoading(true);
+    getUsers();
+    return () => ac.abort(); // Abort both fetches on unmount
+  }, [URL, getUsers]);
+
   const deleteUser = (e, id) => {
     e.preventDefault();
     console.log(id, `${process.env.REACT_APP_HEROKU_LINK}admin/users/${id}`);
 
-    const token = localStorage.getItem("admin-token");
+    const token = localStorage.getItem("Edith-admin-token");
 
     const headers = {
       "auth-token": token,
@@ -49,14 +55,15 @@ const AllUsers = () => {
     };
 
     axios
-      .delete(`${process.env.REACT_APP_HEROKU_LINK}admin/users/${id}`, {
+      .delete(`${process.env.REACT_APP_HEROKU_LINK}api/admin/users/${id}`, {
         headers: headers,
       })
       .then((response) => {
         console.log(response.data);
         if (response.data.status === "200") {
           toast.success(response.data.message);
-        } else if (response.data.status === "400") {
+          getUsers();
+        } else {
           toast.error(response.data.message);
         }
       })
