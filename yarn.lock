@@ -7791,9 +7791,9 @@ react-app-polyfill@^2.0.0:
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
 
-react-confetti@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.npmjs.org/react-confetti/-/react-confetti-6.0.0.tgz"
+react-confetti@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/react-confetti/-/react-confetti-6.0.1.tgz#d4f57b5a021dd908a6243b8f63b6009b00818d10"
   dependencies:
     tween-functions "^1.2.0"
 
