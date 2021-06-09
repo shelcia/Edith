@@ -852,13 +852,13 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@7.12.1":
+"@babel/runtime@7.12.1", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":2.1":
   version "7.12.1"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.12.1.tgz"
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.12.5":
   version "7.13.10"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.13.10.tgz"
   dependencies:
@@ -1308,6 +1308,7 @@
     dom-accessibility-api "^0.5.4"
     lz-string "^1.4.4"
     pretty-format "^26.6.2"
+
 
 "@testing-library/jest-dom@^5.13.0":
   version "5.13.0"
@@ -9468,9 +9469,9 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-web-vitals@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/web-vitals/-/web-vitals-1.1.2.tgz"
+web-vitals@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/web-vitals/-/web-vitals-2.0.1.tgz#d122720bd9c8dd69792b19c0f6ab0346861a880f"
 
 webidl-conversions@^5.0.0:
   version "5.0.0"
